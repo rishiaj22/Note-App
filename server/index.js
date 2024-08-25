@@ -5,13 +5,19 @@ import connection from "./Config/connection.db.js";
 import {userRouter} from "./Routes/user.route.js"
 import { noteRouter } from "./Routes/note.route.js";
 import auth from "./Middleware/auth.middleware.js";
+import cors from "cors"
 
 const Port = process.env.Port;
 const app = express();
-
+app.use(cors({origin:'*'}))
 app.use(express.json())
 app.use("/user",userRouter)
 app.use("/note",auth,noteRouter)
+
+app.get("/",(req,res)=>{
+    res.send("Welcome to home page")
+});
+
 
 app.listen(Port,async()=>{
     try {
